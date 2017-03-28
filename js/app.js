@@ -85,14 +85,22 @@ Player.prototype.handleInput = function(key) {
 
 };
 
-// Declare array to hold enemies and place one enemy in each row of stones
+//Initiate level at 1
+var level = 1;
+// Declare array to hold enemies
 var allEnemies = [];
-allEnemies[0] = new Enemy(0);
-allEnemies[1] = new Enemy(1);
-allEnemies[2] = new Enemy(2);
-allEnemies[3] = new Enemy(0);
-allEnemies[4] = new Enemy(1);
-allEnemies[5] = new Enemy(2);
+
+var drawEnemies = function(level){
+
+var enemyRow;
+for (i=0; i<level; i++){
+    enemyRow = i%3;
+    allEnemies[i] = new Enemy(i%3);
+}
+};
+
+drawEnemies(level);
+
 
 // Declare and instantiate the player
 var player = new Player();

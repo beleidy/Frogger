@@ -24,6 +24,7 @@ var Engine = (function(global) {
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
+        isPaused = false;
 
     canvas.width = 505;
     canvas.height = 606;
@@ -45,8 +46,10 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
+        if (!isPaused){
         render();
         update(dt);
+        }
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
@@ -137,6 +140,8 @@ var Engine = (function(global) {
         }
 
         renderEntities();
+        renderLevelText();
+        
 
     }
 
@@ -145,9 +150,13 @@ var Engine = (function(global) {
         // Check if player has won
         if (player.y === 0) {
             reset();
-            ctx.font = "bold 72px Arial";
+            ctx.font = "bold 92px Arial";
             ctx.fillStyle = "black";
-            ctx.fillText("WIN!", 150, 520);
+            ctx.fillText("YOU WIN!", 35, 520);
+            ctx.strokeStyle = "white";
+            ctx.strokeText("YOU WIN!", 35, 520);
+            level++;
+            drawEnemies(level);
 
         }
         // Check if player has collided with enemy, exact values were obtained by
@@ -156,6 +165,11 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             if ((enemy.y === player.y) && (enemy.x - player.x) < 75 && (player.x - enemy.x) < 75) {
                 reset();
+                ctx.font = "bold 72px Arial";
+                ctx.fillStyle = "black";
+                ctx.fillText("YOU LOSE!", 50, 520);
+                ctx.strokeStyle = "white";
+                ctx.strokeText("YOU LOSE!", 50, 520);
             }
 
         });
@@ -178,6 +192,14 @@ var Engine = (function(global) {
         player.render();
     }
 
+    function renderLevelText(){
+        var levelText = "Level: " + level; 
+        ctx.font = "20px Arial";
+        ctx.fillStyle = "white";
+        ctx.fillText(levelText, 420, 80);
+
+    }
+
 
     /* This function resets the player position back to the bottom middle square.
         This happens after the player has won, or has died. It allows 200ms so that
@@ -185,10 +207,13 @@ var Engine = (function(global) {
         before resetting
      */
     function reset() {
+        isPaused = true;
         setTimeout(function() {
             player.y = 415;
             player.x = 202;
-        }, 200);
+            isPaused = false;
+        }, 700);
+        
     }
 
     /* Go ahead and load all of the images we know we're going to need to
