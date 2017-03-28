@@ -1,14 +1,15 @@
 // Enemies our player must avoid
 var Enemy = function(enemyRow) {
 
-    // Initial x position is off the screen, this allows the enemy to "enter"
-    this.x = -101;
+    // Initial x position is random between -101 (just to the left of the screen) and
+    //606, just to the right of the screen.
+    this.x = Math.random() * 707 - 101;
 
     // Initial y position is calculated to match enemy to stone row
     this.y = (enemyRow + 1) * 83;
 
-    // Assign a random number between 0 and 2 for speed for each
-    // enemy to make game more interesting. 2 was chosen by experimenting
+    // Assign a random number between 1 and 3 for speed for each
+    // enemy to make game more interesting. 3 was chosen by experimenting
     this.speed = Math.random() * 2 + 1;
 
     // The image/sprite for our enemies, this uses
@@ -16,7 +17,7 @@ var Enemy = function(enemyRow) {
     this.sprite = 'images/enemy-bug.png';
 };
 
-// Update the enemy's position, required method for game
+// Update the enemy's position
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     // Update the position of the enemy based on speed and time elapsed
@@ -28,15 +29,12 @@ Enemy.prototype.update = function(dt) {
     }
 };
 
-// Draw the enemy on the screen, required method for game
+// Draw the enemy on the screen
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
+// This is the player class
 var Player = function() {
     // Sets initial position of player to bottom centre square
     this.x = 202;
@@ -44,10 +42,6 @@ var Player = function() {
 
     // Sets which image of player to be used
     this.sprite = 'images/char-boy.png';
-};
-
-Player.prototype.update = function() {
-
 };
 
 //Draw the player
@@ -82,7 +76,6 @@ Player.prototype.handleInput = function(key) {
             this.y = this.y + 83;
         }
     }
-
 };
 
 //Initiate level at 1
@@ -90,24 +83,22 @@ var level = 1;
 // Declare array to hold enemies
 var allEnemies = [];
 
-var drawEnemies = function(level){
-
-var enemyRow;
-for (i=0; i<level; i++){
-    enemyRow = i%3;
-    allEnemies[i] = new Enemy(i%3);
-}
+//This function creates the enemies (instantiates the classes)
+var createEnemies = function(level){
+    var enemyRow;
+    allEnemies = [];
+    for (i=0; i<level; i++){
+        enemyRow = i%3;
+        allEnemies[i] = new Enemy(i%3);
+    }
 };
-
-drawEnemies(level);
-
 
 // Declare and instantiate the player
 var player = new Player();
 
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// This listens for key presses and sends the keys to
+// Player.handleInput() method.
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',

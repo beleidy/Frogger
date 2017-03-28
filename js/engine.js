@@ -24,6 +24,7 @@ var Engine = (function(global) {
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
+        //Flag to pause game
         isPaused = false;
 
     canvas.width = 505;
@@ -46,6 +47,7 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
+        //If the game is not paused
         if (!isPaused){
         render();
         update(dt);
@@ -97,7 +99,6 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update();
     }
 
     /* This function initially draws the "game level", it will then call
@@ -149,14 +150,13 @@ var Engine = (function(global) {
     function checkCollisions() {
         // Check if player has won
         if (player.y === 0) {
+            level++;
             reset();
             ctx.font = "bold 92px Arial";
             ctx.fillStyle = "black";
             ctx.fillText("YOU WIN!", 35, 520);
             ctx.strokeStyle = "white";
             ctx.strokeText("YOU WIN!", 35, 520);
-            level++;
-            drawEnemies(level);
 
         }
         // Check if player has collided with enemy, exact values were obtained by
@@ -164,6 +164,7 @@ var Engine = (function(global) {
 
         allEnemies.forEach(function(enemy) {
             if ((enemy.y === player.y) && (enemy.x - player.x) < 75 && (player.x - enemy.x) < 75) {
+                level--
                 reset();
                 ctx.font = "bold 72px Arial";
                 ctx.fillStyle = "black";
@@ -171,10 +172,7 @@ var Engine = (function(global) {
                 ctx.strokeStyle = "white";
                 ctx.strokeText("YOU LOSE!", 50, 520);
             }
-
         });
-
-
     }
 
     /* This function is called by the render function and is called on each game
@@ -188,26 +186,30 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-
+        //Render the player
         player.render();
     }
 
     function renderLevelText(){
+        //Set the text to be rendered
         var levelText = "Level: " + level; 
+        //Render level status on canvas
         ctx.font = "20px Arial";
         ctx.fillStyle = "white";
         ctx.fillText(levelText, 420, 80);
-
     }
 
-
     /* This function resets the player position back to the bottom middle square.
-        This happens after the player has won, or has died. It allows 200ms so that
+        This happens after the player has won, or has died. It allows 700ms so that
         the user can see the player character in the position where it died or won
         before resetting
      */
     function reset() {
+        //Pause game - skips update and render
         isPaused = true;
+        //create the enemies for the current level
+        createEnemies(level);
+        //Wait 700ms before unpausing the game and resetting the player to initial position
         setTimeout(function() {
             player.y = 415;
             player.x = 202;
