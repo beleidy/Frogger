@@ -45,8 +45,8 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-        update(dt);
         render();
+        update(dt);
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
@@ -80,7 +80,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
 
     /* This is called by the update function and loops through all of the
@@ -108,12 +108,12 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = [
-                'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+                'images/water-block.png', // Top row is water
+                'images/stone-block.png', // Row 1 of 3 of stone
+                'images/stone-block.png', // Row 2 of 3 of stone
+                'images/stone-block.png', // Row 3 of 3 of stone
+                'images/grass-block.png', // Row 1 of 2 of grass
+                'images/grass-block.png' // Row 2 of 2 of grass
             ],
             numRows = 6,
             numCols = 5,
@@ -137,6 +137,30 @@ var Engine = (function(global) {
         }
 
         renderEntities();
+
+    }
+
+    // Check Collisions
+    function checkCollisions() {
+        // Check if player has won
+        if (player.y === 0) {
+            reset();
+            ctx.font = "bold 72px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText("WIN!", 150, 520);
+
+        }
+        // Check if player has collided with enemy, exact values were obtained by
+        // experimenting on screen to see when exactly the coloured pixels collided
+
+        allEnemies.forEach(function(enemy) {
+            if ((enemy.y === player.y) && (enemy.x - player.x) < 75 && (player.x - enemy.x) < 75) {
+                reset();
+            }
+
+        });
+
+
     }
 
     /* This function is called by the render function and is called on each game
@@ -154,12 +178,17 @@ var Engine = (function(global) {
         player.render();
     }
 
-    /* This function does nothing but it could have been a good place to
-     * handle game reset states - maybe a new game menu or a game over screen
-     * those sorts of things. It's only called once by the init() method.
+
+    /* This function resets the player position back to the bottom middle square.
+        This happens after the player has won, or has died. It allows 200ms so that
+        the user can see the player character in the position where it died or won
+        before resetting
      */
     function reset() {
-        // noop
+        setTimeout(function() {
+            player.y = 415;
+            player.x = 202;
+        }, 200);
     }
 
     /* Go ahead and load all of the images we know we're going to need to
