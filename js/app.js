@@ -85,10 +85,8 @@ var allEnemies = [];
 
 //This function creates the enemies (instantiates the classes)
 var createEnemies = function(level){
-    var enemyRow;
     allEnemies = [];
     for (i=0; i<level; i++){
-        enemyRow = i%3;
         allEnemies[i] = new Enemy(i%3);
     }
 };
