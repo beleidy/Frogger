@@ -1,24 +1,22 @@
-frontend-nanodegree-arcade-game
-===============================
+#Frogger
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+Disclaimer:
+This game has been built as part of a Udacity Front-end Development Course. Images and game scaffolding were provided by Udacity. 
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+Original code can be found here: https://github.com/udacity/frontend-nanodegree-arcade-game
 
-1. How to install the game
+## 1. How to run the game
 
-- Unzip all files into a folder on your computer
-- Use Google Chrome, to open index.html
+Access index.html in a browser, just make sure you maintain the directory structure.
 
-Do not change the locations of the files relative to each other after you have unzipped them
-otherwise the game will not work properly.
-
-2. How to play the game
+## 2. How to play the game
 
 The goal of the game is to get the boy to cross the stones and reach the water.
 You win by reaching the water without colliding with any of the enemy bugs.
 If you collide with a bug, you will be sent back to your first position on the grass.
 If you win, you will see a Win message on the screen before being reset back to your initial position.
+
+Every time you win, you go one level up, and an extra enemy bug is added. Every time you lose you go a level down and an enemy bug is removed.
 
 - How to move the character
 
