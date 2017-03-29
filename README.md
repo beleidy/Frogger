@@ -1,4 +1,4 @@
-##Frogger
+# Frogger
 
 Disclaimer:
 This game has been built as part of a Udacity Front-end Development Course. Images and game scaffolding were provided by Udacity. 
