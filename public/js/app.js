@@ -107,3 +107,10 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+// Add listenrer for swipe events to make game mobile-friendly
+$(document).on('swipe', function (event) {
+	// event.direction can be up or right, down, left
+    // this coincides nicely with our selected key values
+    player.handleInput(event.direction);
+});
