@@ -1,4 +1,7 @@
 {
+  "projects": {
+    "default": "frogger-a55c4"
+  },
   "hosting": {
     "public": "public"
   }
