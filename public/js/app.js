@@ -114,3 +114,8 @@ $(document).on('swipe', function (event) {
     // this coincides nicely with our selected key values
     player.handleInput(event.direction);
 });
+
+$(document).on('touchstart touchmove', function(e){ 
+     //prevent native touch activity like scrolling
+     e.preventDefault(); 
+});
