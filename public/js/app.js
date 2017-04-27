@@ -1,8 +1,7 @@
 // Enemies our player must avoid
 var Enemy = function(enemyRow) {
-
     // Initial x position is random between -101 (just to the left of the screen) and
-    //606, just to the right of the screen.
+    // 606, just to the right of the screen.
     this.x = Math.random() * 707 - 101;
 
     // Initial y position is calculated to match enemy to stone row
@@ -51,7 +50,6 @@ Player.prototype.render = function() {
 
 // Updates player position properties based on which key has been pressed
 Player.prototype.handleInput = function(key) {
-
     // Move character based on key, but only if character is not at the edge
     if (key === 'left') {
         if (this.x > 0) {
@@ -104,7 +102,6 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
 });
 

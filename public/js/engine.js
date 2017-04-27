@@ -49,8 +49,8 @@ var Engine = (function(global) {
          */
         //If the game is not paused
         if (!isPaused){
-        render();
-        update(dt);
+            render();
+            update(dt);
         }
 
         /* Set our lastTime variable which is used to determine the time delta
@@ -141,9 +141,7 @@ var Engine = (function(global) {
         }
 
         renderEntities();
-        renderLevelText();
-        
-
+        renderLevelText();      
     }
 
     // Check Collisions
